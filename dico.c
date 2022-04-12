@@ -13,7 +13,7 @@ char* fichier_lettre;
 
 struct dico_en_tableau {
     int taille;
-    char* tableau_mots;
+    char** tableau_mots;
 };
 
 int test_longueur(char* mot,int longueur) {
@@ -35,7 +35,7 @@ int test_longueur(char* mot,int longueur) {
 
 }
 
-char* mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
+void mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
     /*prend en argument nom du fichier associé au dictionnaire de la langue francais et le nom du fichier dans
     lequel on réecrit le dictionnaire en enlevant les mots de longueur autre que longueur. renvoie le nom du fichier
     dans lequel on ecrit le nouveau dico
@@ -87,7 +87,7 @@ char* mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
     fclose(dico);
     fclose(dico_5lettres);
     
-    return("dico_5lettres");
+    
 }
 
 int taille_dico_lettres(char* fichier) {
@@ -115,10 +115,11 @@ int taille_dico_lettres(char* fichier) {
 
     cpt++; //incrementation
 
-    while( ! feof(dico)) {
+    while( !feof(dico)) {
         //on veut juste recuperer le nombre de mots de telle longueur. pas besoin a priori de lire le mot
+        fscanf(dico, "%s", mot);
         cpt++; //incrementation
-
+        //printf("%d\n",cpt);
     }
 
     return(cpt);
@@ -131,14 +132,7 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
     char mot[254];
     int indice=0;
     t.taille = taille;
-    t.tableau_mots = malloc(taille*sizeof(char));
 
-    //test echec creation
-    if (t.tableau_mots == NULL) {
-        printf("erreur création tableau mot \n");
-        free(t.tableau_mots);
-        exit(0);
-    }
 
     //ouverture du dico
     FILE *dico = fopen(fichier, "rb");
@@ -156,25 +150,28 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
         printf("erreur lecture mot dans le fichier \n");
         exit(0);
     }
-
-    t.tableau_mots[indice]=*mot;
-
+    printf("indice %d \n",indice);
+    t.tableau_mots[indice]=mot;
+    printf("%s \n",t.tableau_mots[indice]);
     indice++;
+    printf("indice %d \n",indice);
 
-    while(! feof(dico)) {
+    while(!feof(dico)) {
         fscanf(dico,"%s",mot);
         
         if (mot == NULL) {
             printf("erreur lecture mot dans le fichier \n");
             exit(0);
         }
-
-        t.tableau_mots[indice]=*mot;
+        //printf("%s \n",mot);
+        t.tableau_mots[indice]=mot;
+        //printf("%s \n",t.tableau_mots[indice]);
 
         indice++;
-
+        
     }
-
+    printf("indice finale %d \n",indice);
+    printf("fonction finale %s \n",t.tableau_mots[indice-1]);
     return(t);
 }
 
