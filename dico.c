@@ -5,7 +5,7 @@
 #define TRUE 1
 #define FALSE -1
 
-/* lecture d'un dictionnaire francais et récriture dans le bon format (sans accent) et avec seulement les mots de 5 lettres */
+/* lecture d'un dictionnaire francais et réecriture dans le bon format (sans accents) et avec seulement les mots de 5 lettres */
 
 char* fichier;
 int longueur;
@@ -15,6 +15,9 @@ struct dico_en_tableau {
     int taille;
     char* tableau_mots;
 };
+
+
+
 
 int test_longueur(char* mot,int longueur) {
     /*prend en argument un mot et une longueur et renvoie True si le mot fait une longueur longueur et false 
@@ -34,6 +37,9 @@ int test_longueur(char* mot,int longueur) {
     }
 
 }
+
+
+
 
 char* mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
     /*prend en argument nom du fichier associé au dictionnaire de la langue francais et le nom du fichier dans
@@ -90,6 +96,9 @@ char* mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
     return("dico_5lettres");
 }
 
+//test
+
+
 int taille_dico_lettres(char* fichier) {
     /* prend en argument le fichier correspondand au dictionnaire avec que les mots d'une certaine longueur, la pluspart du temps 5
     lettres et renvoie la taille de ce fichier, c'est à dire le nombre de mots*/
@@ -123,6 +132,9 @@ int taille_dico_lettres(char* fichier) {
 
     return(cpt);
 }
+
+
+
 
 struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, struct dico_en_tableau t) {
     /*prend en argument le nom du fichier associé au dictionnaire contenant que les mots d'une certaine longueur et le nombre de mots associés et
@@ -161,6 +173,7 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
 
     indice++;
 
+    // parcours du fichier texte et ajout les mots dans le tableau
     while(! feof(dico)) {
         fscanf(dico,"%s",mot);
         
