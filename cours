@@ -1,6 +1,0 @@
-git pull  => téléchargement de tout ce qui est nouveau 
-git add * (dans mon_fichier.c)
-git commit -am "mon message"
-git push  => envoie sur le serveur de git tout ce qui a été ajouté 
-
-
