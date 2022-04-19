@@ -14,7 +14,7 @@ int main () {
     //printf("1 \n");
     //printf("%s \n",nom_dico_longueur);
     /*creation du tableau*/
-    int taille = taille_dico_lettres(nom_dico_longueur);
+    int taille = trouver_nombre_de_mots(nom_dico_longueur);
 
 
     struct dico_en_tableau t;
@@ -28,9 +28,14 @@ int main () {
     }
 
     t=transformation_dico_tableau(nom_dico_longueur, taille, t);
+
     printf("taille %d \n",taille);
     printf("test tableau debut %s \n",t.tableau_mots[0]);
     printf("test tableau fin %s \n",t.tableau_mots[7476]);
+
+    for (int i=0;i<taille;i++) {
+        free(t.tableau_mots[i]);
+    }
     free(t.tableau_mots); 
 
     return(0);

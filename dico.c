@@ -96,7 +96,7 @@ void mot_de_cinq_lettres(char* fichier, char* fichier_lettre, int longueur) {
 //test
 
 
-int taille_dico_lettres(char* fichier) {
+int trouver_nombre_de_mots(char* fichier) {
     /* prend en argument le fichier correspondand au dictionnaire avec que les mots d'une certaine longueur, la pluspart du temps 5
     lettres et renvoie la taille de ce fichier, c'est à dire le nombre de mots*/
 
@@ -159,33 +159,34 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
         printf("erreur lecture mot dans le fichier \n");
         exit(0);
     }
+
     printf("indice %d \n",indice);
     t.tableau_mots[indice]=mot;
     printf("%s \n",t.tableau_mots[indice]);
+
     indice++;
     printf("indice %d \n",indice);
 
-<<<<<<< HEAD
     // parcours du fichier texte et ajout les mots dans le tableau
     while(! feof(dico)) {
-=======
-    while(!feof(dico)) {
->>>>>>> 7e0e037d8f4a0538b30a1a3f9736ccf5b42d6c5f
+
         fscanf(dico,"%s",mot);
         
         if (mot == NULL) {
             printf("erreur lecture mot dans le fichier \n");
             exit(0);
         }
-        //printf("%s \n",mot);
+
+        printf("%s \n",mot);
         t.tableau_mots[indice]=mot;
-        //printf("%s \n",t.tableau_mots[indice]);
+        printf("%s \n",t.tableau_mots[indice]);
 
         indice++;
         
     }
     printf("indice finale %d \n",indice);
     printf("fonction finale %s \n",t.tableau_mots[indice-1]);
+    printf("mot au hasard dans le dico %s \n",t.tableau_mots[500]);
     return(t);
 }
 
