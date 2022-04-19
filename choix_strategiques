@@ -1,3 +1,11 @@
+Consignes :
+dans le read me, faire une description du code avec explication des regles, et ligne de code à executer (surtout si y a des biliothèques pas standard)
+
+
+
+
+
+
 choix du dico :
 - mots en français 
 - mots sans accents
@@ -12,3 +20,29 @@ affichage :
 - si la lettre est bien placée (x)
 - si la lettre est présente mais au mauvais endroit (o) 
 - si la lettre n'est pas présente dans le mot à deviner (-)
+
+
+test du programme : 
+comparaison temps de calcul 
+#include <time.h>
+
+int main(){
+	float temps;
+	clock_t t1,t2;
+	
+	t1 = clock()
+	
+	mon code
+	
+	t2 = clock()
+	
+	temps = (float)(t2-t1)/CLOCKS_PER_SEC
+	
+	printf("%f /n",temps);
+	
+	return(0);
+}
+
+recherhce du mot du joueur 
+dicotomie ou reparcourir le tableau
+	

@@ -44,16 +44,15 @@ int trouver_nombre_mot(char* fichier) {
     return(cpt);
 }
 
-void creation_tableau_dico (char* dico, int taille) {
-    /*prend en argument le dictionnaire et la taille de celui-ci et renvoie les mêmes données sous forme de tableau*/
-    char* tableau_dico = malloc(taille*sizeof(char));
-    
-}
 
 
 
-char choisir_mot_aleatoire(char* tableau_dico, int taille) {
+char* choisir_mot_aleatoire(char** tableau_dico, int taille) {
     /*prend en argument le dictionnaire sous forme de tableau et la taille de celui-ci et renvoie un mot aléatoire du dico*/
 
+    int nb_alea = rand()%taille;
 
+    char* mot_alea = tableau_dico[nb_alea];
+
+    return(mot_alea);
 }
