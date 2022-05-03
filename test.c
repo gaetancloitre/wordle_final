@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define TRUE 1
 #define FALSE -1
@@ -8,20 +9,25 @@
 
 #include "affichage.c"
 
-
-
+#include "dico.c"
 
 
 int main() {
-    char* mot_a_deviner = "aleas";
-    char* mot_utilisateur = "aller";
-    char** tableau_nul [3];
-    &tableau_nul[0] = "aleas";
-    &tableau_nul[1] = "aller";
-    &tableau_nul[2] = "trucs";
-    int taille = 3;
+    srand(time(NULL));
 
-    affichage(mot_a_deviner,mot_utilisateur,tableau_nul,taille);
+    char mot_a_deviner[LONGUEUR];
+    char* nom_dico_longueur = "dico_5.txt";
+    int taille;
+    
+    //creation du dico de mot de 5 lettres, taille et 
+    mot_de_cinq_lettres("dico_scrabble.txt",nom_dico_longueur,LONGUEUR);
+    taille = trouver_nombre_de_mots(nom_dico_longueur);
+    tirage_mot(nom_dico_longueur,taille,mot_a_deviner);
+ 
+
+    char* mot_utilisateur = "bancs";
+
+    affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille);
 
     return(0);
 }

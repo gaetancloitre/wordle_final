@@ -190,13 +190,13 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
     return(t);
 }
 
-char* tirage_mot(char* fichier, int taille) {
-    /* renvoie le mot à deviner en prenant en argument le nom du fichier, la tille ie le nombre de ligne, 
+void tirage_mot(char* fichier, int taille, char* mot) {
+    /* renvoie le mot à deviner par passage de pointeur en prenant en argument le nom du fichier, la taille ie le nombre de ligne, et le pointeur
     */
+   
 
     int nb_alea = rand()%taille;
-    char* mot;
-    int indice=0;
+    
 
     //ouverture du dico
     FILE *dico = fopen(fichier, "rb");
@@ -207,36 +207,49 @@ char* tirage_mot(char* fichier, int taille) {
         exit(0);
     }
 
+    for (int indice=0; indice<=nb_alea;indice++){
+        fscanf(dico, "%s", mot) ;
+
+        if (mot == NULL) {
+            printf("erreur lecture mot dans le fichier 1\n");
+            exit(0);
+        }   
+    fclose(dico);
+    }
+    /*
     //lecture premier mot
-    fscanf(dico, "%s", mot);
+    fscanf(dico, "%s", mot) ;
 
     if (mot == NULL) {
-        printf("erreur lecture mot dans le fichier \n");
+        printf("erreur lecture mot dans le fichier 1\n");
         exit(0);
     }
 
     if (indice == nb_alea) {
-        return(mot);
+        exit(0);
     }
 
     indice ++;
-
+    printf("nb alea %d \n",nb_alea);
     
 
     while(!feof(dico)){
         fscanf(dico, "%s", mot);
+        //printf("%s \n",mot);
         if (mot == NULL) {
-            printf("erreur lecture mot dans le fichier \n");
+            printf("erreur lecture mot dans le fichier 2\n");
             exit(0);
         }
         if (indice == nb_alea) {
-            return(mot);
+            exit(0);
         }
         indice++;
     }
-
+    printf("indice %d \n",indice);
+    printf("mot %s \n",mot);
     if (indice == nb_alea) {
-        return(mot);
+        exit(0);
     }
     exit(0);  //pb entre nb_aleatoire et indice, normalement ne peut pas arriver
+    */
 }

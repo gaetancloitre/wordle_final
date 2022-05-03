@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+/*
 #include "load_dic.c"
 
 bool trouver_mot_dichotomie (char* mot, char** tableau, int debut, int fin) {
@@ -58,3 +58,4 @@ int main (int argc, char *argv[])
 
   return (0) ;
 }
+*/

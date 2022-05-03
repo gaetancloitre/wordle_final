@@ -9,25 +9,38 @@
 
 
 
-int recherche (char* mot_utilisateur, char** tableau_dico, int taille) {
+int recherche (char* mot_utilisateur, char* fichier, int taille, char* mot) {
     int compa;
-    for (int i=0; i<taille; i++){
-        compa = strcmp(tableau_dico[i],mot_utilisateur);
+
+    //ouverture du dico
+    FILE *dico = fopen(fichier, "rb");
+
+    //test ouverture
+    if (dico == NULL) {
+        printf("erreur ouverture fichier dico avec que les mots d'une certaine longueur \n");
+        exit(0);
+    }
+
+    for (int indice=0; indice<=taille;indice++){
+        fscanf(dico, "%s", mot) ;
+        compa = strcmp(mot,mot_utilisateur);
         if (compa == 0) {
             return(TRUE);
         }
     }
+    fclose(dico);
     return(FALSE);
 }
 
 
 
-void affichage (char* mot_a_deviner, char* mot_utilisateur, char** tableau_dico, int taille) {
+void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille) {
 /* prend en argument le mot rentré par l'utilisateur et le mot à deviner et affiche les informartions à l'utilisateur selon si 
 les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non présente dans le mot à deviner (-) */
 
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
-    if (recherche(mot_utilisateur, tableau_dico, taille) == FALSE) {
+    char mot[LONGUEUR];
+    if (recherche(mot_utilisateur,fichier,taille,mot) == FALSE) {
            printf("le mot n'est pas dans le dictionnaire, merci d'en tenter un autre /n");
            exit(0);
        }

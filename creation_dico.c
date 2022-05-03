@@ -1,22 +1,26 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "dico.c"
 
 #define LONGUEUR 5
 
-int main () {
-    /*main pour obtenir le dico avec les mots de la longueur souhaitée*/
-    char* nom_dico_longueur = "dico_5.txt";
-    /*creation dico avec mot d'une certaine longueur*/
+
+/*
+void creation_dico_et_mot(char* mot, char* nom_dico_longueur, int* taille){
+    //srand(time(NULL));
+    main pour obtenir le dico avec les mots de la longueur souhaitée
+    
+    creation dico avec mot d'une certaine longueur
     mot_de_cinq_lettres("dico_scrabble.txt",nom_dico_longueur,LONGUEUR);
     //printf("1 \n");
     //printf("%s \n",nom_dico_longueur);
-    /*creation du tableau*/
-    int taille = trouver_nombre_de_mots(nom_dico_longueur);
+    /reation du tableau
+    trouver_nombre_de_mots(nom_dico_longueur,taille);
 
-
+    
     struct dico_en_tableau t;
     t.tableau_mots = malloc(taille*sizeof(char[LONGUEUR]));
 
@@ -37,6 +41,14 @@ int main () {
         free(t.tableau_mots[i]);
     }
     free(t.tableau_mots); 
+    
+    printf("1\n");
+    
 
-    return(0);
+    tirage_mot(nom_dico_longueur,taille,mot);
+    printf("test  \n");
+    printf("mot %s \n",mot);
+
+    
 }
+*/
