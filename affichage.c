@@ -7,18 +7,16 @@
 
 #define LONGUEUR 5
 
+
+
 int recherche (char* mot_utilisateur, char** tableau_dico, int taille) {
-
     int compa;
-
     for (int i=0; i<taille; i++){
         compa = strcmp(tableau_dico[i],mot_utilisateur);
-
         if (compa == 0) {
             return(TRUE);
         }
     }
-
     return(FALSE);
 }
 

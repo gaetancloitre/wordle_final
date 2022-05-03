@@ -7,8 +7,8 @@ stockage des mots :
 - passage sous forme d'une structure contenant un tableau des mots et la taille de ce tableau 
 - utilisation d'un tableau : accès plus facile aux mots, facilité de manipulation pour accéder à un mot au hasard 
 
-
 affichage :
 - si la lettre est bien placée (x)
 - si la lettre est présente mais au mauvais endroit (o) 
 - si la lettre n'est pas présente dans le mot à deviner (-)
+=> faire d'abord une boucle pour trouver les lettres bien placées ! (priorité des lettres bien placées car info plus importante pour le joueur)

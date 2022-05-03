@@ -190,3 +190,53 @@ struct dico_en_tableau transformation_dico_tableau(char* fichier, int taille, st
     return(t);
 }
 
+char* tirage_mot(char* fichier, int taille) {
+    /* renvoie le mot à deviner en prenant en argument le nom du fichier, la tille ie le nombre de ligne, 
+    */
+
+    int nb_alea = rand()%taille;
+    char* mot;
+    int indice=0;
+
+    //ouverture du dico
+    FILE *dico = fopen(fichier, "rb");
+
+    //test ouverture
+    if (dico == NULL) {
+        printf("erreur ouverture fichier dico avec que les mots d'une certaine longueur \n");
+        exit(0);
+    }
+
+    //lecture premier mot
+    fscanf(dico, "%s", mot);
+
+    if (mot == NULL) {
+        printf("erreur lecture mot dans le fichier \n");
+        exit(0);
+    }
+
+    if (indice == nb_alea) {
+        return(mot);
+    }
+
+    indice ++;
+
+    
+
+    while(!feof(dico)){
+        fscanf(dico, "%s", mot);
+        if (mot == NULL) {
+            printf("erreur lecture mot dans le fichier \n");
+            exit(0);
+        }
+        if (indice == nb_alea) {
+            return(mot);
+        }
+        indice++;
+    }
+
+    if (indice == nb_alea) {
+        return(mot);
+    }
+    exit(0);  //pb entre nb_aleatoire et indice, normalement ne peut pas arriver
+}
