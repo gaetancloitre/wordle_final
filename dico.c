@@ -213,9 +213,13 @@ void tirage_mot(char* fichier, int taille, char* mot) {
         if (mot == NULL) {
             printf("erreur lecture mot dans le fichier 1\n");
             exit(0);
-        }   
-    fclose(dico);
+        }
+
+        
+
     }
+    //printf("mot a deviner en cours %s \n",mot);
+    fclose(dico);
     /*
     //lecture premier mot
     fscanf(dico, "%s", mot) ;
