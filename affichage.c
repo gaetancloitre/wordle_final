@@ -52,7 +52,7 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
     for (int j=0; j<LONGUEUR;j++){
       tableau2[j]=0;           // marquage de chaque lettre du mot à deviner
     }
-
+    printf("test \n");
     for (int i=0; i<LONGUEUR; i++) {
          tableau1[i]=0; 
         for (int j=0; j<LONGUEUR;j++){
