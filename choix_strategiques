@@ -1,6 +1,6 @@
 choix du dico :
 - mots en français 
-- mots sans accents
+- mots sans accents => dico en majuscule 
 - possibilité de passer très facilement à une longueur de mots différente pour le jeu avec "define LONGUEUR"
 
 stockage des mots :
@@ -12,3 +12,37 @@ affichage :
 - si la lettre est présente mais au mauvais endroit (o) 
 - si la lettre n'est pas présente dans le mot à deviner (-)
 => faire d'abord une boucle pour trouver les lettres bien placées ! (priorité des lettres bien placées car info plus importante pour le joueur)
+
+meilleure combinaison :
+- déjà connue : "TARIE", cf probabilité de présence des lettres en français 
+
+fonction rand :
+- vrai-faux aléatoire
+
+fin de partie :
+- si 6 essais sans succès ou si succès
+- [pour l'instant] sortie du jeu à la fin d'une partie 
+
+allocation mémoire :
+danger : mettre des char* de longueur LONGUEUR+1 pour avoir une case mémoire pour le "\0" (sinon ARBRESAINE) si les mots se suivent de manière continue
+         printf avec %s => affiche jusqu'au "\0" et que ce ne soit plus affichable 
+
+A FAIRE :
+- supprimer les mots non usuels du dictionnaire OU prendre un dictionnaire déjà adapté 
+- faire un clavier avec les lettres encore disponibles 
+- vérifier le mot rentrer (en plus de de s'il existe bien)
+- intelligence artificielle 
+
+
+
+README :
+- rentrer un mot français en majuscule de ???? lettres 
+- explication de l'affichage (x/o/.)
+- mettre la commande d'execution 
+
+
+RENDU :
+avant mardi soir pour les mails 
+avant jeudi 23h59
+vérifier que la prof est contributrice 
+un mail (objet : IN104) par binome avec la composition du binome et le lien git à marine.saintmezard......

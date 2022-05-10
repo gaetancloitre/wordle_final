@@ -7,7 +7,13 @@
 
 #define LONGUEUR 5
 
-
+struct etude_mot {
+    char pos1;
+    char pos2;
+    char pos3;
+    char pos4;
+    char pos5;
+};
 
 int recherche (char* mot_utilisateur, char* fichier, int taille, char* mot) {
     int compa;
@@ -34,11 +40,15 @@ int recherche (char* mot_utilisateur, char* fichier, int taille, char* mot) {
 
 
 
-void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille) {
+void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille, struct etude_mot etude) {
 /* prend en argument le mot rentré par l'utilisateur et le mot à deviner et affiche les informartions à l'utilisateur selon si 
 les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non présente dans le mot à deviner (-) */
+    etude = {
+
+    };
 
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
+
     char mot[LONGUEUR];
     if (recherche(mot_utilisateur,fichier,taille,mot) == FALSE) {
            printf("le mot n'est pas dans le dictionnaire, merci d'en tenter un autre /n");
