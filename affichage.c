@@ -40,10 +40,11 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
     char mot[LONGUEUR];
-    if (recherche(mot_utilisateur,fichier,taille,mot) == FALSE) {
-           printf("le mot n'est pas dans le dictionnaire, merci d'en tenter un autre /n");
-           exit(0);
-       }
+    while (recherche(mot_utilisateur,fichier,taille,mot) == FALSE) {
+        printf("le mot %s n'est pas dans le dictionnaire, merci d'en tenter un autre \n",mot_utilisateur);
+        printf("Rentrez un nouveau mot :\n");
+        scanf("%s",mot_utilisateur);
+    }
 
     int cpt=0;
     int tableau1[LONGUEUR];
@@ -52,7 +53,7 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
     for (int j=0; j<LONGUEUR;j++){
       tableau2[j]=0;           // marquage de chaque lettre du mot à deviner
     }
-    printf("test \n");
+    
     for (int i=0; i<LONGUEUR; i++) {
          tableau1[i]=0; 
         for (int j=0; j<LONGUEUR;j++){
@@ -75,4 +76,18 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
            printf("-");
         }
     }
+
+    printf("\n");
+}
+
+void a_gagner(char* mot_a_deviner, char* mot_utilisateur) {
+
+    int compa;
+    //printf("%s et %s \n",mot_a_deviner,mot_utilisateur);
+    compa=strcmp(mot_a_deviner,mot_utilisateur);
+
+    if (compa == 0) {
+        printf("Fécilicitation !\n");
+        exit(0);
+    } 
 }

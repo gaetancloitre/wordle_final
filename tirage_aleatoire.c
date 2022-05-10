@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define TRUE 1
-#define FALSE 0
+#define FALSE -1
 
 int trouver_nombre_mot(char* fichier) {
     /* prend en argument le nom du dico considéré et renvoie le nombre de mots de ce dico*/
@@ -56,3 +56,4 @@ char* choisir_mot_aleatoire(char** tableau_dico, int taille) {
 
     return(mot_alea);
 }
+
