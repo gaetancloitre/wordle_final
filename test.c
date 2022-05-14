@@ -7,9 +7,9 @@
 #define FALSE -1
 #define LONGUEUR 5
 
-#include "affichage.c"
-
-#include "dico.c"
+#include "affichage.h"
+#include "dico.h"
+#include "clavier_nouveau.h"
 
 
 int main() {
