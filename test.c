@@ -127,13 +127,13 @@ int main(int argc,char* argv[]) {
 
         for (compteur=2; compteur <=6; compteur++){
             printf("essai %d \n",compteur);
-            /*lettres_impossibles ;
+            lettres_impossibles = recherche_lettres_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible);
 
             for (int j=0;j<nb_lettres_impossible;j++) {
-                
+                enlever_mot_lettre_impossible(dico_IA,dico_IA_moins,clavier);
             }
 
-             */
+            
             printf("%s",mot_utilisateur);
             affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
 
