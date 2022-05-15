@@ -11,6 +11,7 @@
 #include "dico.h"
 #include "clavier_nouveau.h"
 #include "IA.h"
+#include "IA_autre.h"
 
 
 
@@ -92,8 +93,57 @@ int main(int argc,char* argv[]) {
         }
 
         printf("Dommage, le mot était %s. \nRelance le programme si tu veux rejouer. \n",mot_a_deviner);
+    }
+
+    if (mode==2) {
+    //mode de jeu IA deuxième solution
+
+        char* nom_dico_longueur = "dico_5.txt";
+        char mot_a_deviner[LONGUEUR+1];
+        char* mot_utilisateur="TARIE";
+        int taille;
+        int compteur=1;
+        char pclavier[27];
+        char* clavier = initialisation_clavier(pclavier);
+        char* lettres_impossibles=malloc(27*sizeof(char));
+        int nb_lettres_impossible=0;
+        int* pointeur_nb_lettres_impossible = &nb_lettres_impossible;
+        char* dico_IA;
+        strcpy(dico_IA,nom_dico_longueur);
+        char* dico_IA_moins = "dico_IA_moins";
+
+        mot_de_cinq_lettres("dico_scrabble.txt",nom_dico_longueur,LONGUEUR);
+        taille = trouver_nombre_de_mots(nom_dico_longueur);
+        tirage_mot(nom_dico_longueur,taille,mot_a_deviner);
+
+        printf("essai %d \n",compteur);
+
+    
+        printf("Rentrez le mot : \n");
+        printf("%s\n",mot_utilisateur);
+        affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
+
+        a_gagner(mot_a_deviner,mot_utilisateur);
+
+        for (compteur=2; compteur <=6; compteur++){
+            printf("essai %d \n",compteur);
+            /*lettres_impossibles ;
+
+            for (int j=0;j<nb_lettres_impossible;j++) {
+                
+            }
+
+             */
+            printf("%s",mot_utilisateur);
+            affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
+
+            a_gagner(mot_a_deviner,mot_utilisateur);
+
         }
 
+        printf("Dommage, le mot était %s. \nRelance le programme si tu veux rejouer. \n",mot_a_deviner);
+        free(lettres_impossibles);
+    }
 
 
     return(0);

@@ -9,6 +9,19 @@
 
 #include "affichage.h"
 #include "clavier_nouveau.h"
+#include "dico.h"
+
+char* recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible) {
+    
+    for(int i=0;i<taille_alphabet;i++){
+        if(clavier[i]=='0'){
+            lettres_impossible[*nb_lettres_impossible]=alphabet[i];
+            *nb_lettres_impossible=*nb_lettres_impossible+1;
+        }
+    }
+    
+    return(lettres_impossible);
+}
 
 void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impossible, char* clavier){
 
@@ -126,4 +139,12 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 
     fclose(dico);
     fclose(dico_nouveau);
+}
+
+char* nouveau_mot(char* dico_lettres_possible,char* nouveau_mot){
+    int taille = trouver_nombre_de_mots(dico_lettres_possible);
+
+    tirage_mot(dico_lettres_possible,taille,nouveau_mot);
+
+    return(nouveau_mot);    
 }
