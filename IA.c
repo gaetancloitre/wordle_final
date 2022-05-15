@@ -121,26 +121,33 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
 char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
     // cette fonction crée l'IA qui permet de trouvr le prochain mot le plus optimal possible 
-
+    
     char mu[LONGUEUR+1];   // tableau associé au mot_utilisateur 
     char nmu[LONGUEUR+1];   // tableau associé au nouveau_mot_utilisateur 
 
-    char* nouveau_mot_utilisateur = mot_utilisateur;
+    char nouveau_mot_utilisateur[LONGUEUR+1];
+    strcpy(nouveau_mot_utilisateur,mot_utilisateur);
+
+    printf("%s et %s\n",mot_utilisateur, nouveau_mot_utilisateur);
 
     int cpt1=0;
 
-    for (int j=0; j<LONGUEUR;j++){
-        nmu[j]='-';          
+    for (int j=0; j<LONGUEUR-1;j++){
+        nmu[j]='-';         
     }
+
+    printf("%s et %s\n",mu,nmu);
     for (int i=0; i<LONGUEUR; i++) {
         mu[i]='-'; 
+        printf("%s et %s\n",mu,nmu);
         for (int j=0; j<LONGUEUR;j++){
-            if ((mot_utilisateur[i]==nouveau_mot_utilisateur[j])&&(cpt1==0)&&(nmu[j]=='-')){
+            if ((mot_utilisateur[i]==mot_a_deviner[j])&&(cpt1==0)&&(nmu[j]=='-')){
                 if (i==j) {
                     mu[i]='x';
                     nmu[i]='x';  
                     cpt1=1;
-                } else {
+                } 
+                else {
                     mu[i]='o';
                     nmu[i]='o';   
                     cpt1=1;
@@ -154,6 +161,7 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
 
 
     int cpt2=0; 
+
     for (int i=0; i<5; i++) {
         if (mu[i] == 'x') {
             nmu[i]='x';
@@ -161,7 +169,10 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
         }
     }
 
+    printf("0\n");
+
     while (recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur) == FALSE) {
+        printf("1\n");
         for (int i=0; i<5; i++) {
             if (mu[i]=='o') {
                 for (int j=0; j<5; j++) {
@@ -179,11 +190,11 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
         for (int i=0; i<5; i++) {
             if (mu[i]=='-') {
                 nmu[i]=clavier[rand() % 26];   ////////////////
+                printf("2\n");
             }
         }
     }
-
-    return(nouveau_mot_utilisateur);
+    return(mot_utilisateur);
 }
 
     
