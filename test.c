@@ -83,7 +83,7 @@ int main(int argc,char* argv[]) {
             printf("essai %d \n",compteur);
 
             printf("Rentrez le mot : \n");
-            mot_utilisateur = creation_mot_IA(mot_a_deviner, mot_utilisateur, fichier, taille,clavier); 
+            mot_utilisateur = creation_mot_IA(mot_a_deviner, mot_utilisateur, nom_dico_longueur, taille,clavier); 
             printf("%s",mot_utilisateur);
             affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
 

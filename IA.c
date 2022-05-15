@@ -122,8 +122,8 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
     // cette fonction crée l'IA qui permet de trouvr le prochain mot le plus optimal possible 
     
-    char mu[LONGUEUR+1];   // tableau associé au mot_utilisateur 
-    char nmu[LONGUEUR+1];   // tableau associé au nouveau_mot_utilisateur 
+    char* mu = malloc(LONGUEUR*sizeof(char));   // tableau associé au mot_utilisateur 
+    char* nmu = malloc(LONGUEUR*sizeof(char));   // tableau associé au nouveau_mot_utilisateur 
 
     char nouveau_mot_utilisateur[LONGUEUR+1];
     strcpy(nouveau_mot_utilisateur,mot_utilisateur);
@@ -132,9 +132,11 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
 
     int cpt1=0;
 
-    for (int j=0; j<LONGUEUR-1;j++){
-        nmu[j]='-';         
+    for (int j=0; j<LONGUEUR;j++){
+        nmu[j]='-';
+              
     }
+
 
     printf("%s et %s\n",mu,nmu);
     for (int i=0; i<LONGUEUR; i++) {
@@ -170,6 +172,7 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
     }
 
     printf("0\n");
+    printf("%s \n",fichier);
 
     while (recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur) == FALSE) {
         printf("1\n");
@@ -194,6 +197,9 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             }
         }
     }
+
+    free(nmu);
+    free(mu);
     return(mot_utilisateur);
 }
 
