@@ -7,15 +7,9 @@
 
 #define LONGUEUR 5
 
-struct etude_mot {
-    char pos1;
-    char pos2;
-    char pos3;
-    char pos4;
-    char pos5;
-};
+#include "clavier_nouveau.h"
 
-int recherche (char* mot_utilisateur, char* fichier, int taille, char* mot) {
+int recherche(char* mot_utilisateur, char* fichier, int taille, char* mot) {
     int compa;
 
     //ouverture du dico
@@ -40,12 +34,10 @@ int recherche (char* mot_utilisateur, char* fichier, int taille, char* mot) {
 
 
 
-void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille, struct etude_mot etude) {
+void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille, char* clavier) {
 /* prend en argument le mot rentré par l'utilisateur et le mot à deviner et affiche les informartions à l'utilisateur selon si 
-les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non présente dans le mot à deviner (-) */
-    etude = {
-
-    };
+les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non présente dans le mot à deviner (-) */ 
+    
 
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
 
@@ -84,10 +76,12 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
         cpt=0;    
         if (tableau1[i]==0) {
            printf("-");
+           int indice = indice_lettre(mot_utilisateur[i]);
+           clavier[indice]='0';
         }
     }
 
-    printf("\n");
+       printf("\n");
 }
 
 void a_gagner(char* mot_a_deviner, char* mot_utilisateur) {
@@ -97,7 +91,7 @@ void a_gagner(char* mot_a_deviner, char* mot_utilisateur) {
     compa=strcmp(mot_a_deviner,mot_utilisateur);
 
     if (compa == 0) {
-        printf("Fécilicitation !\n");
+        printf("Félicitation !\n");
         exit(0);
     } 
 }

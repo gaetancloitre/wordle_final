@@ -7,6 +7,10 @@
 
 #define LONGUEUR 5
 
+#include "affichage.h"
+#include "clavier_nouveau.h"
+
+
 /* struct etude_mot {
     char pos1;
     char pos2;
@@ -27,7 +31,7 @@ struct file file_IA {
     max_nb = 5;
     cur_nb = 1;
     first = 0;
-    data = "-";
+    data = '-';
 }; 
 
 
@@ -53,10 +57,10 @@ void enqueue (struct  *file_IA , char val ) {
     file_IA -> cur_nb ++ ;
 }
 
-/*
+
 void creation_file (struct file file_IA) {
     for (int i=0; i=4; i++) {
-        enqueue("-");
+        enqueue('-');
 }
 
 
@@ -66,7 +70,7 @@ void creation_file (struct file file_IA) {
 
 
 void affichage_IA (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille) {
-/* prend en argument le mot rentré par l'utilisateur et le mot à deviner et affiche les informartions à l'utilisateur selon si 
+prend en argument le mot rentré par l'utilisateur et le mot à deviner et affiche les informartions à l'utilisateur selon si 
 les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non présente dans le mot à deviner (-) 
     
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
@@ -115,56 +119,56 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
 
 
-char* creation_mot_IA (char* mot_a_deviner, char* mot_utilisateur, struct file file_IA) {
+char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
     // cette fonction crée l'IA qui permet de trouvr le prochain mot le plus optimal possible 
 
-    char mu[LONGUEUR];   // tableau associé au mot_utilisateur 
-    char mmu[LONGUEUR];   // tableau associé au nouveau_mot_utilisateur 
+    char mu[LONGUEUR+1];   // tableau associé au mot_utilisateur 
+    char nmu[LONGUEUR+1];   // tableau associé au nouveau_mot_utilisateur 
 
     char* nouveau_mot_utilisateur = mot_utilisateur;
 
     int cpt1=0;
 
     for (int j=0; j<LONGUEUR;j++){
-        nmu[j]="-";          
+        nmu[j]='-';          
     }
     for (int i=0; i<LONGUEUR; i++) {
-        mu[i]="-"; 
+        mu[i]='-'; 
         for (int j=0; j<LONGUEUR;j++){
-            if ((mot_utilisateur[i]==nouveau_mot_utilisateur[j])&&(cpt1==0)&&(nmu[j]=="-")){
+            if ((mot_utilisateur[i]==nouveau_mot_utilisateur[j])&&(cpt1==0)&&(nmu[j]=='-')){
                 if (i==j) {
-                    mu[i]="x";
-                    nmu[i]="x";  
+                    mu[i]='x';
+                    nmu[i]='x';  
                     cpt1=1;
                 } else {
-                    mu[i]="o";
-                    nmu[i]="o";   
+                    mu[i]='o';
+                    nmu[i]='o';   
                     cpt1=1;
                 }
             }
         }
-        cpt1=0
+        cpt1=0;
         
     }
     
 
 
     int cpt2=0; 
-    for (int i=0; i=5; i++) {
-        if (mu[i] = "x") {
-            nmu[i]="x";
+    for (int i=0; i<5; i++) {
+        if (mu[i] == 'x') {
+            nmu[i]='x';
             nouveau_mot_utilisateur[i]=mot_utilisateur[i];
         }
     }
 
-    while (recherche(nouveau_mot_utilisateur,fichier,taille,mot) == FALSE) {
-        for (int i=0; i=5; i++) {
-            if (mu[i]="o") {
-                for (int j=0; j=5; j++) {
-                    if (mu[j]!="x") && (mu[j]!="o") && (cpt2=0) {
-                        nmu[j]="o";
-                        mu[i]="-";
-                        ouveau_mot_utilisateur[j]=mot_utilisateur;
+    while (recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur) == FALSE) {
+        for (int i=0; i<5; i++) {
+            if (mu[i]=='o') {
+                for (int j=0; j<5; j++) {
+                    if ((mu[j]!='x') && (mu[j]!='o') && (cpt2=0)) {
+                        nmu[j]='o';
+                        mu[i]='-';
+                        nouveau_mot_utilisateur[j]=mot_utilisateur[i];
                         cpt2=1;
                     }
                 }
@@ -172,14 +176,14 @@ char* creation_mot_IA (char* mot_a_deviner, char* mot_utilisateur, struct file f
         }
         cpt2=0;
         
-        for (int i=0; i=5; i++) {
-            if (mu[i]="-") {
-                nmu[i]=random(lettre);   ////////////////
+        for (int i=0; i<5; i++) {
+            if (mu[i]=='-') {
+                nmu[i]=clavier[rand() % 26];   ////////////////
             }
         }
     }
 
-    return(nouveau_mot_utilisateur)
+    return(nouveau_mot_utilisateur);
 }
 
     

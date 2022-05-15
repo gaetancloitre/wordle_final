@@ -20,3 +20,15 @@ void affichage_clavier(char clavier[27]){
     }
     printf("\n");
 }
+
+int indice_lettre(char lettre){
+
+    for(int i=0; i<taille_alphabet;i++){
+        if(alphabet[i]==lettre) {
+            return(i);
+        }
+    }
+
+    printf("problème pour trouver l'indice \n");
+    exit(0);
+}
