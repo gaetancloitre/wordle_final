@@ -184,113 +184,32 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             }
             cpt2=0;
         }
+
         printf("avec X et O %s , mu :%s, nmu: %s\n", nouveau_mot_utilisateur,mu, nmu);
 
         
         for (int i=0; i<5; i++) {
             if (nmu[i]=='-') {
-                printf("1\n");
+                
                 do {
                 nouveau_mot_utilisateur[i]=clavier[rand() % 26];  
                 } while (nouveau_mot_utilisateur[i]=='0');
             }
         }
-         printf("final : %s\n", nouveau_mot_utilisateur);
-         printf("%d\n",recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur));
-    } while (recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur) == TRUE);
-    
+
+        printf("final : %s\n", nouveau_mot_utilisateur);
+        printf("%d\n",recherche_gus(nouveau_mot_utilisateur,fichier));
+    } while (recherche_gus(nouveau_mot_utilisateur,fichier) == TRUE);
+
+    printf("nouveau mot utilisateur test 2 %s \n",nouveau_mot_utilisateur);
     free(nmu);
     free(mu);
     
-    mot_utilisateur=nouveau_mot_utilisateur;
+    strcpy(mot_utilisateur,nouveau_mot_utilisateur);
 
     return(mot_utilisateur);
 }
 
     
-char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
-    // cette fonction crée l'IA qui permet de trouvr le prochain mot le plus optimal possible 
-    
-    char* mu = malloc(LONGUEUR*sizeof(char));   // tableau associé au mot_utilisateur 
-    char* nmu = malloc(LONGUEUR*sizeof(char));   // tableau associé au nouveau_mot_utilisateur 
 
-    char nouveau_mot_utilisateur[LONGUEUR+1];
-    strcpy(nouveau_mot_utilisateur,mot_utilisateur);
-
-    printf("%s et %s\n",mot_utilisateur, nouveau_mot_utilisateur);
-
-    int cpt1=0;
-
-    for (int j=0; j<LONGUEUR;j++){
-        nmu[j]='-';
-              
-    }
-
-
-    printf("%s et %s\n",mu,nmu);
-    for (int i=0; i<LONGUEUR; i++) {
-        mu[i]='-'; 
-        printf("%s et %s\n",mu,nmu);
-        for (int j=0; j<LONGUEUR;j++){
-            if ((mot_utilisateur[i]==mot_a_deviner[j])&&(cpt1==0)&&(nmu[j]=='-')){
-                if (i==j) {
-                    mu[i]='x';
-                    nmu[i]='x';  
-                    cpt1=1;
-                } 
-                else {
-                    mu[i]='o';
-                    nmu[i]='o';   
-                    cpt1=1;
-                }
-            }
-        }
-        cpt1=0;
-        
-    }
-    
-
-
-    int cpt2=0; 
-
-    for (int i=0; i<5; i++) {
-        if (mu[i] == 'x') {
-            nmu[i]='x';
-            nouveau_mot_utilisateur[i]=mot_utilisateur[i];
-        }
-    }
-
-    printf("0\n");
-    printf("%s \n",fichier);
-
-    while (recherche(nouveau_mot_utilisateur,fichier,taille,nouveau_mot_utilisateur) == FALSE) {
-        printf("1\n");
-        for (int i=0; i<5; i++) {
-            if (mu[i]=='o') {
-                for (int j=0; j<5; j++) {
-                    if ((mu[j]!='x') && (mu[j]!='o') && (cpt2=0)) {
-                        nmu[j]='o';
-                        mu[i]='-';
-                        nouveau_mot_utilisateur[j]=mot_utilisateur[i];
-                        cpt2=1;
-                    }
-                }
-            }
-        }
-        cpt2=0;
-        
-        for (int i=0; i<5; i++) {
-            if (mu[i]=='-') {
-                nmu[i]=clavier[rand() % 26];   ////////////////
-                printf("2\n");
-            }
-        }
-    }
-
-    free(nmu);
-    free(mu);
-    return(mot_utilisateur);
-}
-
-    
     

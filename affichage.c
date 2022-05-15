@@ -21,6 +21,7 @@ int recherche(char* mot_utilisateur, char* fichier, int taille, char* mot) {
         exit(0);
     }
 
+
     for (int indice=0; indice<=taille;indice++){
         fscanf(dico, "%s", mot) ;
         compa = strcmp(mot,mot_utilisateur);
@@ -32,6 +33,53 @@ int recherche(char* mot_utilisateur, char* fichier, int taille, char* mot) {
     return(FALSE);
 }
 
+int recherche_gus(char* mot_utilisateur, char* fichier) {
+    int compa;
+    char mot[LONGUEUR+1];
+
+    //ouverture du dico
+    FILE *dico = fopen(fichier, "rb");
+
+    //test ouverture
+    if (dico == NULL) {
+        printf("erreur ouverture fichier dico avec que les mots d'une certaine longueur \n");
+        exit(0);
+    }
+
+    //lecture premier mot
+    fscanf(dico, "%s", mot) ;
+
+    if (mot == NULL) {
+        printf("erreur lecture mot dans le fichier \n");
+        exit(0);
+    }
+
+    compa = strcmp(mot,mot_utilisateur);
+    
+
+    if (compa==0){
+        return(TRUE);
+    }
+
+    //on rentre dans ta boucle
+    fscanf(dico, "%s", mot) ;
+    while(!feof(dico)) {
+        if (mot == NULL) {
+            printf("erreur lecture mot dans le fichier \n");
+            exit(0);
+        }
+
+        compa = strcmp(mot,mot_utilisateur);
+        //printf("compa %d \n",compa);
+            if (compa==0){
+            return(TRUE);
+        }
+        fscanf(dico, "%s", mot) ;
+    }
+
+    fclose(dico);
+    return(FALSE);
+}
 
 
 void affichage (char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille, char* clavier) {
@@ -41,8 +89,8 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
     // vérification de la longueur du mot donnée par l'utilisateur et vérification de la présence dans le dictionnaire 
 
-    char mot[LONGUEUR];
-    while (recherche(mot_utilisateur,fichier,taille,mot) == FALSE) {
+    //char mot[LONGUEUR+1];
+    while (recherche_gus(mot_utilisateur,fichier) == FALSE) {
         printf("le mot %s n'est pas dans le dictionnaire, merci d'en tenter un autre \n",mot_utilisateur);
         printf("Rentrez un nouveau mot :\n");
         scanf("%s",mot_utilisateur);
