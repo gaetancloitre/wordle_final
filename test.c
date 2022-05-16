@@ -106,9 +106,13 @@ int main(int argc,char* argv[]) {
         char pclavier[27];
         char* clavier = initialisation_clavier(pclavier);
         char* lettres_impossibles=malloc(27*sizeof(char));
+        char* lettre_sur = malloc(LONGUEUR*sizeof(char));
         int nb_lettres_impossible=0;
+        int nb_lettre_sur=0;
         int* pointeur_nb_lettres_impossible = &nb_lettres_impossible;
-        char* dico_IA;
+        int* pointeur_nb_lettre_sur = &nb_lettre_sur;
+        int* position_lettre_sur =malloc(LONGUEUR*sizeof(int));
+        char dico_IA[254];
         strcpy(dico_IA,nom_dico_longueur);
         char* dico_IA_moins = "dico_IA_moins";
 
@@ -127,13 +131,17 @@ int main(int argc,char* argv[]) {
 
         for (compteur=2; compteur <=6; compteur++){
             printf("essai %d \n",compteur);
-            lettres_impossibles = recherche_lettres_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible);
+            lettres_impossibles = recherche_lettre_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible);
+            lettre_sur=recherche_lettre_sur(mot_a_deviner,mot_utilisateur,lettre_sur,pointeur_nb_lettre_sur,position_lettre_sur);
 
             for (int j=0;j<nb_lettres_impossible;j++) {
                 enlever_mot_lettre_impossible(dico_IA,dico_IA_moins,clavier);
             }
+            for (int j=0;j<nb_lettre_sur;j++){
+                enlever_mot_lettre_mal_place(dico_IA_moins,dico_IA,clavier,lettre_sur[j],position_lettre_sur[j]);
+            }
 
-            
+            mot_utilisateur=nouveau_mot(dico_IA,mot_utilisateur);           
             printf("%s",mot_utilisateur);
             affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
 
@@ -143,6 +151,8 @@ int main(int argc,char* argv[]) {
 
         printf("Dommage, le mot était %s. \nRelance le programme si tu veux rejouer. \n",mot_a_deviner);
         free(lettres_impossibles);
+        free(lettre_sur);
+        free(position_lettre_sur);
     }
 
 

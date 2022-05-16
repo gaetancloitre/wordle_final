@@ -23,6 +23,16 @@ char* recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* n
     return(lettres_impossible);
 }
 
+char* recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lettre_sur,int* pointeur_nb_lettre_sur){
+    for (int i=0;i<LONGUEUR;i++){
+        if(mot_a_deviner[i]==mot_utilisateur[i]){
+            lettre_sur[*pointeur_nb_lettre_sur]=mot_utilisateur[i];
+            *pointeur_nb_lettre_sur=*pointeur_nb_lettre_sur+1;
+        }
+    }
+    return(lettre_sur);
+}
+
 void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impossible, char* clavier){
 
     char mot[LONGUEUR+1];
