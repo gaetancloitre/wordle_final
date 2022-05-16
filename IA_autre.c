@@ -11,26 +11,57 @@
 #include "clavier_nouveau.h"
 #include "dico.h"
 
-char* recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible) {
+int verifier_lettre_deja_teste(char* liste_lettre, int taille_liste_lettre,char lettre){
+    int test=0;
+    for(int i=0; i<taille_liste_lettre;i++){
+        if(liste_lettre[i]==lettre){
+            test++;
+        }
+    }
+    if (test!=0){
+        return(FALSE);
+    }
+    return(TRUE);
+}
+
+void recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible,char* lettre_sur,int* pointeur_nb_lettre_sur) {
     
     for(int i=0;i<taille_alphabet;i++){
         if(clavier[i]=='0'){
-            lettres_impossible[*nb_lettres_impossible]=alphabet[i];
-            *nb_lettres_impossible=*nb_lettres_impossible+1;
+            int test = verifier_lettre_deja_teste(lettres_impossible,*nb_lettres_impossible,alphabet[i]);
+            if (test == TRUE) {
+                int test =0;
+                for (int j=0;j<*pointeur_nb_lettre_sur;j++){
+                    if (lettre_sur[j]==alphabet[i]){
+                        //verification qu la lettre qu'on veuille enleve n'est pas dans les lettres surs
+                        test++;
+                    }
+
+                }
+                if (test==0){
+                    lettres_impossible[*nb_lettres_impossible]=alphabet[i];
+                    *nb_lettres_impossible=*nb_lettres_impossible+1;
+                }
+            }
         }
     }
-    
-    return(lettres_impossible);
+   
 }
 
-char* recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lettre_sur,int* pointeur_nb_lettre_sur){
+void recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lettre_sur,int* pointeur_nb_lettre_sur,int* position_lettre_sur){
+    
     for (int i=0;i<LONGUEUR;i++){
         if(mot_a_deviner[i]==mot_utilisateur[i]){
-            lettre_sur[*pointeur_nb_lettre_sur]=mot_utilisateur[i];
-            *pointeur_nb_lettre_sur=*pointeur_nb_lettre_sur+1;
+            int test = verifier_lettre_deja_teste(lettre_sur,*pointeur_nb_lettre_sur,mot_a_deviner[i]);
+            if (test==TRUE){
+                lettre_sur[*pointeur_nb_lettre_sur]=mot_utilisateur[i];
+                position_lettre_sur[*pointeur_nb_lettre_sur]=i;
+                *pointeur_nb_lettre_sur=*pointeur_nb_lettre_sur+1;
+            }
         }
     }
-    return(lettre_sur);
+    printf("liste lettre sur %s et liste de leur indice %ls \n",lettre_sur,position_lettre_sur);
+    
 }
 
 void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impossible, char* clavier){
@@ -70,6 +101,7 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
     }
     if (cpt == 5) {//si c'est le cas, on l'ecrit dans le nouveau fichier
         fprintf(dico_lettres_impossible,"%s\n",mot);
+        //printf("%s\n",mot);
     }
     
     fscanf(dico, "%s", mot);
@@ -89,6 +121,7 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
         }
         if (cpt == 5) {//si c'est le cas, on l'ecrit dans le nouveau fichier
             fprintf(dico_lettres_impossible,"%s\n",mot);
+            //printf("%s\n",mot);
         }
 
         fscanf(dico, "%s", mot);
@@ -126,8 +159,9 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
         exit(0);
     }
 
-    if (mot[position_lettre_sur] == clavier[indice_lettre_sur]) {//test 
+    if (mot[position_lettre_sur] == clavier[indice_lettre_sur]) {//test si le mot du dico à la lettre sur bien place
         fprintf(dico_nouveau,"%s\n",mot);
+        //printf("%s\n",mot);
     }
     
     fscanf(dico, "%s", mot);
@@ -142,6 +176,7 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 
         if (mot[position_lettre_sur] == clavier[indice_lettre_sur]) {//test 
             fprintf(dico_nouveau,"%s\n",mot);
+            //printf("%s\n",mot);
         }
 
         fscanf(dico, "%s", mot);
@@ -151,10 +186,11 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
     fclose(dico_nouveau);
 }
 
-char* nouveau_mot(char* dico_lettres_possible,char* nouveau_mot){
+void nouveau_mot(char* dico_lettres_possible,char* nouveau_mot){
     int taille = trouver_nombre_de_mots(dico_lettres_possible);
-
+    printf("taille %d \n",taille);
+    
     tirage_mot(dico_lettres_possible,taille,nouveau_mot);
-
-    return(nouveau_mot);    
+    
+     
 }

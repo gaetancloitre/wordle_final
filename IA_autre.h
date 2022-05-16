@@ -7,10 +7,13 @@
 
 #include "IA_autre.c"
 
-char* recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible);
+int verifier_lettre_deja_teste(char* liste_lettre, int taille_liste_lettre,char lettre);
+//test si la lettre qu'on enleve n'a pas deja ete enleve
+
+void recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible,char* lettre_sur,int* pointeur_nb_lettre_sur);
 //recherche dans le clavier les lettres qui sont impossibles
 
-char* recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lettre_sur,int* pointeur_nb_lettre_sur,int* position_lettre_sur);
+void recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lettre_sur,int* pointeur_nb_lettre_sur,int* position_lettre_sur);
 //recherche les lettres qui sont bien place et les renvoie ainsi que le nombre de lettre bien place
 
 void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impossible, char* clavier);
@@ -20,7 +23,7 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 //enlève tous les mots dont une lettre dont on sait qu'elle est présente et bien place n'est pas bien place
 
 
-char* nouveau_mot(char* dico_lettres_possible,char* nouveau_mot);
+void nouveau_mot(char* dico_lettres_possible,char* nouveau_mot);
 //renvoie un mot qui pourrait convenir
 
 #endif
