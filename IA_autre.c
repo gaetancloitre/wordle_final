@@ -116,14 +116,26 @@ void recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lett
             }
             if (test==FALSE){
                 int position;
+                
                 for (int j=0;j<*pointeur_nb_lettre_sur;j++){
                     if ((lettre_sur[j]==mot_utilisateur[i])&&(j!=i)){
+                        
                         position=j;
+                        int test2=0;
+                        for (int k=0;k<*pointeur_nb_lettre_sur;k++){
+                            if(position==position_lettre_sur[k]){
+                                test2++;
+                            }
+                        }
+                        if (test2==0) {
+                            lettre_sur[*pointeur_nb_lettre_sur]=mot_utilisateur[i];
+                            position_lettre_sur[*pointeur_nb_lettre_sur]=position;
+                            *pointeur_nb_lettre_sur=*pointeur_nb_lettre_sur+1;
+                        }
+
                     }
                 }
-                lettre_sur[*pointeur_nb_lettre_sur]=mot_utilisateur[i];
-                position_lettre_sur[*pointeur_nb_lettre_sur]=position;
-                *pointeur_nb_lettre_sur=*pointeur_nb_lettre_sur+1;
+
             }
 
         }
@@ -173,7 +185,7 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
     }
 
     //ouverture du dico des mots de 5 lettres
-    FILE *dico = fopen(dico_5_lettres, "rb");
+    FILE *dico = fopen(dico_5_lettres, "r");
 
     if (dico == NULL) {
         printf("erreur ouverture fichier dictionnaire francais \n");
@@ -199,8 +211,11 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
     }
     //printf("test %d et %s\n",test,mot);
     if (test == 0) {//si on a pas incremente, c'est que pas de lettre impossiblle
-        fprintf(dico_lettres_impossible,"%s\n",mot);
-        
+        int verif =fprintf(dico_lettres_impossible,"%s\n",mot);
+        if (verif==EOF){
+            printf("MERDE \n");
+            exit(0);
+        }
         //printf("%s\n",mot);
     }
     
@@ -223,7 +238,8 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
         }
         //printf("test %d et %s\n",test,mot);
         if (test == 0) {//si on a pas incremente, c'est que pas de lettre impossiblle
-            //fprintf(dico_lettres_impossible,"%s\n",mot);
+
+            fprintf(dico_lettres_impossible,"%s\n",mot);
             //printf("%s\n",mot);
         }
 
@@ -234,62 +250,89 @@ void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impos
     fclose(dico_lettres_impossible);
 }
 
-void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico_lettres_possible, char lettre_sur, int position_lettre_sur){
-
-    char mot[LONGUEUR+1];
-    
-    //printf("indice lettre sur %d \n",indice_lettre_sur);
-    //creation fichier du dico avec que les mots ne possèdant que des lettres possibles ou non teste
-    FILE *dico_nouveau = fopen(dico_lettres_possible,"w");
-
-    if (dico_nouveau==NULL) {
-        printf("erreur creation nouveau dico \n");
-        exit(0);
+void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico_lettres_possible, char* lettre_sur, int* position_lettre_sur, int* pointeur_nb_lettre_sur){
+/*
+    for (int i=0;i<*pointeur_nb_lettre_sur;i++){
+        printf("%c %d,",lettre_sur[i],position_lettre_sur[i]);
     }
+    printf("\n");
+    */
 
-    //ouverture du dico des mots de 5 lettres sans les lettres impossibles
-    FILE *dico = fopen(dico_sans_lettres_impossible, "rb");
-
-    if (dico == NULL) {
-        printf("erreur ouverture fichier avec que les lettres possible\n");
-        exit(0);
-    }
-
-    //lecture premier mot
-    fscanf(dico, "%s", mot);
-
-    if (mot == NULL) {
-        printf("erreur lecture mot dans le fichier \n");
-        exit(0);
-    }
-
-    if (mot[position_lettre_sur] == lettre_sur) {//test si le mot du dico à la lettre sur bien place
-        fprintf(dico_nouveau,"%s\n",mot);
-        //printf("mot %c et clavier %c \n",mot[position_lettre_sur],clavier[indice_lettre_sur]);
-        //printf("%s\n",mot);
-    }
-    
-    fscanf(dico, "%s", mot);
-
-
-    while (!feof(dico)) {
+    if (*pointeur_nb_lettre_sur!=0){
+        char mot[LONGUEUR+1];
         
+        //printf("indice lettre sur %d \n",indice_lettre_sur);
+        //creation fichier du dico avec que les mots ne possèdant que des lettres possibles ou non teste
+        FILE *dico_nouveau = fopen(dico_lettres_possible,"w");
+        //printf("%s\n",dico_lettres_possible);
+        if (dico_nouveau==NULL) {
+            printf("erreur creation nouveau dico \n");
+            exit(0);
+        }
+
+        //ouverture du dico des mots de 5 lettres sans les lettres impossibles
+        FILE *dico = fopen(dico_sans_lettres_impossible, "r");
+
+        if (dico == NULL) {
+            printf("erreur ouverture fichier avec que les lettres possible\n");
+            exit(0);
+        }
+
+        //lecture premier mot
+        fscanf(dico, "%s", mot);
+
         if (mot == NULL) {
             printf("erreur lecture mot dans le fichier \n");
             exit(0);
         }
+        int test =0;
 
-        if (mot[position_lettre_sur] == lettre_sur) {//test 
+        for (int i=0;i<*pointeur_nb_lettre_sur;i++){
+            if(mot[position_lettre_sur[i]]!=lettre_sur[i]){
+                test++;
+                
+            }
+        }
+        if (test==0) {//test si le mot du dico à la lettre sur bien place
             fprintf(dico_nouveau,"%s\n",mot);
-            //printf("mot %c et clavier %c \n",mot[position_lettre_sur],clavier[indice_lettre_sur]);
+            
             //printf("%s\n",mot);
         }
-
+        
         fscanf(dico, "%s", mot);
+
+
+        while (!feof(dico)) {
+            
+            if (mot == NULL) {
+                printf("erreur lecture mot dans le fichier \n");
+                exit(0);
+            }
+
+            test =0;
+            for (int i=0;i<*pointeur_nb_lettre_sur;i++){
+                //printf("position lettre sur %d lettre sur %c et lettre mot %c \n",position_lettre_sur[i],lettre_sur[i],mot[position_lettre_sur[i]]);
+                if(mot[position_lettre_sur[i]]!=lettre_sur[i]){
+                    test++;
+                    //printf("%d %c \n",position_lettre_sur[i],mot[position_lettre_sur[i]]);
+                
+                }
+            }
+            
+            if (test==0) {//test si le mot du dico à la lettre sur bien place
+                fprintf(dico_nouveau,"%s\n",mot);
+                //printf("mot %s \n",mot);
+                printf("%s\n",mot);
+            }
+
+            fscanf(dico, "%s", mot);
+        }
+
+        fclose(dico);
+        fclose(dico_nouveau);
     }
 
-    fclose(dico);
-    fclose(dico_nouveau);
+    copie_dico(dico_sans_lettres_impossible,dico_lettres_possible);
 }
 
 void nouveau_mot(char* dico_lettres_possible,char* nouveau_mot){
