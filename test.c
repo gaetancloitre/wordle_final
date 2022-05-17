@@ -123,44 +123,44 @@ int main(int argc,char* argv[]) {
         mot_de_cinq_lettres("dico_scrabble.txt",nom_dico_longueur,LONGUEUR);
         taille = trouver_nombre_de_mots(nom_dico_longueur);
         tirage_mot(nom_dico_longueur,taille,mot_a_deviner);
+
         printf("mot à deviner %s \n",mot_a_deviner);
         printf("essai %d \n",compteur);
         printf("%s\n",mot_utilisateur);
 
         affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
-
         a_gagner(mot_a_deviner,mot_utilisateur);
 
         copie_dico(nom_dico_longueur,dico_IA);
 
         for (compteur=2; compteur <=6; compteur++){
-            printf("essai %d \n",compteur);
+            
             recherche_lettre_mal_place(mot_a_deviner,mot_utilisateur,lettre_mal_place,pointeur_nb_lettre_mal_place);
             recherche_lettre_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible,lettre_sur,pointeur_nb_lettre_sur,lettre_mal_place,pointeur_nb_lettre_mal_place);
             recherche_lettre_sur(mot_a_deviner,mot_utilisateur,lettre_sur,pointeur_nb_lettre_sur,position_lettre_sur);
             
             //printf("indice lettre sur %ls \n",position_lettre_sur);
             //on enleve tous les mots avec des lettres impossibles
-            for (int j=0;j<nb_lettres_impossible;j++) {
-                enlever_mot_lettre_impossible(dico_IA,dico_IA_moins,clavier);
+            
+            enlever_mot_lettre_impossible(dico_IA,dico_IA_moins,lettres_impossibles,pointeur_nb_lettres_impossible);
                 
-            }
+            
             //on enleve tous les mots avec des lettres qui ne sont pas les bonnes lettres quand on sait qu'elles sont bien place
             for (int j=0;j<*pointeur_nb_lettre_sur;j++){
                 printf("lettre sur %c et sa position %d \n",lettre_sur[j],position_lettre_sur[j]);
-                enlever_mot_lettre_mal_place(dico_IA_moins,dico_IA,clavier,lettre_sur[j],position_lettre_sur[j]);
+                enlever_mot_lettre_mal_place(dico_IA_moins,dico_IA,lettre_sur[j],position_lettre_sur[j]);
             }
-            printf("lettre impossible %s \n",lettres_impossibles);
-            
-
+            //printf("lettre impossible %s \n",lettres_impossibles);
+            printf("lettre sur %s lettre mal place %s et  lettre impossible %s \n",lettre_sur,lettre_mal_place,lettres_impossibles);
+            printf("essai %d \n",compteur);
             nouveau_mot(dico_IA,mot_utilisateur);           
             printf("%s \n",mot_utilisateur);
             affichage(mot_a_deviner,mot_utilisateur,dico_IA,taille,clavier);
-
+            
             a_gagner(mot_a_deviner,mot_utilisateur);
-            //exit(0);
+            //if (compteur==3){exit(0);}
         }
-
+        
         printf("Dommage, le mot était %s. \nRelance le programme si tu veux rejouer. \n",mot_a_deviner);
         free(lettres_impossibles);
         free(lettre_sur);
