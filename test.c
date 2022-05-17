@@ -107,15 +107,17 @@ int main(int argc,char* argv[]) {
         char* clavier = initialisation_clavier(pclavier);
         char* lettres_impossibles=malloc(27*sizeof(char));
         char* lettre_sur = malloc(LONGUEUR*sizeof(char));
+        char* lettre_mal_place = malloc(LONGUEUR*sizeof(char));
         int nb_lettres_impossible=0;
         int nb_lettre_sur=0;
+        int nb_lettre_mal_place=0;
         int* pointeur_nb_lettres_impossible = &nb_lettres_impossible;
         int* pointeur_nb_lettre_sur = &nb_lettre_sur;
+        int* pointeur_nb_lettre_mal_place = &nb_lettre_mal_place;
         int* position_lettre_sur=malloc((LONGUEUR)*sizeof(int));
         for (int i=0; i<LONGUEUR;i++) {position_lettre_sur[i]=0;}
         //printf("test affichage liste indice %ls et juste un indice %d \n",position_lettre_sur,position_lettre_sur[0]);
-        char dico_IA[254];
-        strcpy(dico_IA,nom_dico_longueur);
+        char* dico_IA="dico_IA";
         char* dico_IA_moins = "dico_IA_moins";
 
         mot_de_cinq_lettres("dico_scrabble.txt",nom_dico_longueur,LONGUEUR);
@@ -129,16 +131,19 @@ int main(int argc,char* argv[]) {
 
         a_gagner(mot_a_deviner,mot_utilisateur);
 
+        copie_dico(nom_dico_longueur,dico_IA);
+
         for (compteur=2; compteur <=6; compteur++){
             printf("essai %d \n",compteur);
-            recherche_lettre_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible,lettre_sur,pointeur_nb_lettre_sur);
+            recherche_lettre_mal_place(mot_a_deviner,mot_utilisateur,lettre_mal_place,pointeur_nb_lettre_mal_place);
+            recherche_lettre_impossible(clavier,lettres_impossibles,pointeur_nb_lettres_impossible,lettre_sur,pointeur_nb_lettre_sur,lettre_mal_place,pointeur_nb_lettre_mal_place);
             recherche_lettre_sur(mot_a_deviner,mot_utilisateur,lettre_sur,pointeur_nb_lettre_sur,position_lettre_sur);
             
             //printf("indice lettre sur %ls \n",position_lettre_sur);
             //on enleve tous les mots avec des lettres impossibles
             for (int j=0;j<nb_lettres_impossible;j++) {
                 enlever_mot_lettre_impossible(dico_IA,dico_IA_moins,clavier);
-                 
+                
             }
             //on enleve tous les mots avec des lettres qui ne sont pas les bonnes lettres quand on sait qu'elles sont bien place
             for (int j=0;j<*pointeur_nb_lettre_sur;j++){
@@ -150,16 +155,17 @@ int main(int argc,char* argv[]) {
 
             nouveau_mot(dico_IA,mot_utilisateur);           
             printf("%s \n",mot_utilisateur);
-            affichage(mot_a_deviner,mot_utilisateur,nom_dico_longueur,taille,clavier);
+            affichage(mot_a_deviner,mot_utilisateur,dico_IA,taille,clavier);
 
             a_gagner(mot_a_deviner,mot_utilisateur);
-
+            //exit(0);
         }
 
         printf("Dommage, le mot était %s. \nRelance le programme si tu veux rejouer. \n",mot_a_deviner);
         free(lettres_impossibles);
         free(lettre_sur);
         free(position_lettre_sur);
+        free(lettre_mal_place);
     }
 
 

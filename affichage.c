@@ -129,7 +129,7 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
         }
     }
 
-       printf("\n");
+    printf("\n");
 }
 
 void a_gagner(char* mot_a_deviner, char* mot_utilisateur) {

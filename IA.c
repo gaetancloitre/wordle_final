@@ -164,7 +164,7 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             nouveau_mot_utilisateur[i]=mot_utilisateur[i];
         }
     }
-    printf("avec X %s \n", nouveau_mot_utilisateur);
+    printf("Avec X %s \n", nouveau_mot_utilisateur);
 
 
     do {

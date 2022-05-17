@@ -11,6 +11,51 @@
 #include "clavier_nouveau.h"
 #include "dico.h"
 
+void copie_dico(char* nom_dico_a_copier, char* nouveau_dico){
+    char mot[LONGUEUR+1];
+
+    //creation fichier du nouveau dico dans lequel on veut copier le contenu du premier dico
+    FILE *dico_nouveau = fopen(nouveau_dico,"w");
+
+    if (dico_nouveau==NULL) {
+        printf("erreur creation dico nouveau \n");
+        exit(0);
+    }
+
+    //ouverture du dico que l'on veut copier
+    FILE *dico_ancien = fopen(nom_dico_a_copier, "rb");
+
+    if (dico_ancien == NULL) {
+        printf("erreur ouverture dico ancien \n");
+        exit(0);
+    }
+
+    //lecture premier mot
+    fscanf(dico_ancien,"%s",mot);
+
+    //test lecture mot
+    if (mot == NULL) {
+        printf("erreur lecture mot dico ancien \n");
+        exit(0);
+    }
+
+    fprintf(dico_nouveau,"%s\n",mot);
+    //on parcours tout le fichier
+    fscanf(dico_ancien,"%s",mot);
+    while(!feof(dico_ancien)) {
+        if (mot == NULL) {
+            printf("erreur lecture mot dico ancien \n");
+            exit(0);
+        }
+        fprintf(dico_nouveau,"%s\n",mot);
+        fscanf(dico_ancien,"%s",mot);
+    }
+
+    fclose(dico_ancien);
+    fclose(dico_nouveau);
+
+}
+
 int verifier_lettre_deja_teste(char* liste_lettre, int taille_liste_lettre,char lettre){
     int test=0;
     for(int i=0; i<taille_liste_lettre;i++){
@@ -24,24 +69,33 @@ int verifier_lettre_deja_teste(char* liste_lettre, int taille_liste_lettre,char 
     return(TRUE);
 }
 
-void recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible,char* lettre_sur,int* pointeur_nb_lettre_sur) {
+void recherche_lettre_impossible(char* clavier, char* lettres_impossible,int* nb_lettres_impossible,char* lettre_sur,int* pointeur_nb_lettre_sur,char* lettre_mal_place, int* pointeur_nb_lettre_mal_place) {
     
     for(int i=0;i<taille_alphabet;i++){
         if(clavier[i]=='0'){
             int test = verifier_lettre_deja_teste(lettres_impossible,*nb_lettres_impossible,alphabet[i]);
             if (test == TRUE) {
-                int test =0;
+                int test_sur = 0;
+                int test_mal_place =0;
+
                 for (int j=0;j<*pointeur_nb_lettre_sur;j++){
                     if (lettre_sur[j]==alphabet[i]){
                         //verification qu la lettre qu'on veuille enleve n'est pas dans les lettres surs
-                        test++;
+                        test_sur++;
                     }
-
+                    if (lettre_mal_place[j]==alphabet[i]){
+                        //verification que la lettre qu'on veuille enleve n'est pas simplement mam place
+                        test_mal_place++;
+                    }
                 }
-                if (test==0){
+                if ((test_sur==0)&&(test_mal_place==0)){
                     lettres_impossible[*nb_lettres_impossible]=alphabet[i];
                     *nb_lettres_impossible=*nb_lettres_impossible+1;
                 }
+
+
+
+                
             }
         }
     }
@@ -60,8 +114,27 @@ void recherche_lettre_sur(char* mot_a_deviner, char* mot_utilisateur, char* lett
             }
         }
     }
-    printf("liste lettre sur %s et liste de leur indice %ls \n",lettre_sur,position_lettre_sur);
+    printf("liste lettre sur %s \n",lettre_sur);
     
+}
+
+void recherche_lettre_mal_place(char* mot_a_deviner, char* mot_utilisateur, char* lettre_mal_place, int* pointeur_nb_lettre_mal_place) {
+    //fait une liste de lettre mal place
+
+    for(int i=0;i<LONGUEUR;i++){
+        for (int j=0;j<LONGUEUR;j++){
+            int test=0;
+            for(int k=0;k<*pointeur_nb_lettre_mal_place;k++){
+                if(mot_utilisateur[j]==lettre_mal_place[k]){
+                    test++;
+                }
+                if ((mot_a_deviner[i]==mot_utilisateur[j])&&(test==0)){
+                    lettre_mal_place[*pointeur_nb_lettre_mal_place]=mot_utilisateur[j];
+                    *pointeur_nb_lettre_mal_place=*pointeur_nb_lettre_mal_place+1;
+                }
+            }
+        }
+    }
 }
 
 void enlever_mot_lettre_impossible(char* dico_5_lettres, char* dico_lettre_impossible, char* clavier){
@@ -135,6 +208,7 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 
     char mot[LONGUEUR+1];
     int indice_lettre_sur = indice_lettre(lettre_sur);
+    printf("indice lettre sur %d \n",indice_lettre_sur);
     //creation fichier du dico avec que les mots ne possèdant que des lettres possibles ou non teste
     FILE *dico_nouveau = fopen(dico_lettres_possible,"w");
 
@@ -161,6 +235,7 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 
     if (mot[position_lettre_sur] == clavier[indice_lettre_sur]) {//test si le mot du dico à la lettre sur bien place
         fprintf(dico_nouveau,"%s\n",mot);
+        //printf("mot %c et clavier %c \n",mot[position_lettre_sur],clavier[indice_lettre_sur]);
         //printf("%s\n",mot);
     }
     
@@ -176,6 +251,7 @@ void enlever_mot_lettre_mal_place(char* dico_sans_lettres_impossible, char* dico
 
         if (mot[position_lettre_sur] == clavier[indice_lettre_sur]) {//test 
             fprintf(dico_nouveau,"%s\n",mot);
+            //printf("mot %c et clavier %c \n",mot[position_lettre_sur],clavier[indice_lettre_sur]);
             //printf("%s\n",mot);
         }
 

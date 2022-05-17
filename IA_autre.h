@@ -7,6 +7,9 @@
 
 #include "IA_autre.c"
 
+void copie_dico(char* nom_dico_a_copier, char* nouveau_dico);
+//permet de copier le contenu d'un fichier ecrit dans un autre
+
 int verifier_lettre_deja_teste(char* liste_lettre, int taille_liste_lettre,char lettre);
 //test si la lettre qu'on enleve n'a pas deja ete enleve
 
