@@ -91,8 +91,8 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
     //char mot[LONGUEUR+1];
     while (recherche_gus(mot_utilisateur,fichier) == FALSE) {
-        printf("le mot %s n'est pas dans le dictionnaire, merci d'en tenter un autre \n",mot_utilisateur);
-        printf("Rentrez un nouveau mot :\n");
+        printf("Le mot %s n'est pas dans le dictionnaire, merci d'en tenter un autre \n",mot_utilisateur);
+        printf("Quel est le mot de %d lettres que vous souhaitez tester ? \n",LONGUEUR);
         scanf("%s",mot_utilisateur);
     }
 

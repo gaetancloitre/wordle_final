@@ -119,7 +119,7 @@ les lettres sont bien placées (x), présente mais au mauvais endroit (o) ou non
 
 
 
-char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
+void creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier, int taille,char* clavier) {
     // cette fonction crée l'IA qui permet de trouvr le prochain mot le plus optimal possible 
     
     char* mu = malloc(LONGUEUR*sizeof(char));   // tableau associé au mot_utilisateur 
@@ -164,7 +164,7 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             nouveau_mot_utilisateur[i]=mot_utilisateur[i];
         }
     }
-    printf("Avec X %s \n", nouveau_mot_utilisateur);
+    //printf("Avec X %s \n", nouveau_mot_utilisateur);
 
 
     do {
@@ -185,7 +185,7 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             cpt2=0;
         }
 
-        printf("avec X et O %s , mu :%s, nmu: %s\n", nouveau_mot_utilisateur,mu, nmu);
+        //printf("avec X et O %s , mu :%s, nmu: %s\n", nouveau_mot_utilisateur,mu, nmu);
 
         
         for (int i=0; i<5; i++) {
@@ -197,17 +197,17 @@ char* creation_mot_IA(char* mot_a_deviner, char* mot_utilisateur, char* fichier,
             }
         }
 
-        printf("final : %s\n", nouveau_mot_utilisateur);
-        printf("%d\n",recherche_gus(nouveau_mot_utilisateur,fichier));
-    } while (recherche_gus(nouveau_mot_utilisateur,fichier) == TRUE);
+        //printf("final : %s\n", nouveau_mot_utilisateur);
+        //printf("%d\n",recherche_gus(nouveau_mot_utilisateur,fichier));
+    } while (recherche_gus(nouveau_mot_utilisateur,fichier) == FALSE);
 
-    printf("nouveau mot utilisateur test 2 %s \n",nouveau_mot_utilisateur);
+    //printf("nouveau mot utilisateur test 2 %s \n",nouveau_mot_utilisateur);
     free(nmu);
     free(mu);
     
     strcpy(mot_utilisateur,nouveau_mot_utilisateur);
 
-    return(mot_utilisateur);
+    
 }
 
     

@@ -9,10 +9,10 @@
 
 
 char* initialisation_clavier(char* clavier) ;
-	//initialise la cahine de caractere associé au clavier
+//initialise la chaine de caractere associé au clavier
 
 
 void affichage_clavier(char* clavier) ;
-	//affiche le clavier avec les lettres encore possible sur le terminal
+//affiche le clavier avec les lettres encore possible sur le terminal
 
 #endif
